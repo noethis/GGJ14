@@ -219,8 +219,9 @@ pip-log.txt
 ## UNITY
 #############
 .DS_Store
-Library/
-Temp/
+/Library
+/Temp
+/obj
 *.csproj
 *.pidb
 *.unityproj
