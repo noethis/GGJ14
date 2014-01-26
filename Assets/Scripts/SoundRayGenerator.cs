@@ -4,6 +4,7 @@ using System.Collections;
 public class SoundRayGenerator : MonoBehaviour {
 
 	public SoundRay soundRay;
+	public AudioClip bouncingSound;
 
 	public void generate(Vector3 pos, Vector3 dir, float speed, int numRays, float lifeTime = 3, float spread = 60) {
 		if (numRays == 1) {
@@ -20,5 +21,6 @@ public class SoundRayGenerator : MonoBehaviour {
 
 	private Vector3 Rotate(Vector3 vec, float angle) {
 		return Quaternion.Euler(0, angle, 0) * vec;
+		AudioSource.PlayClipAtPoint( bouncingSound, transform.position, 1.0f );
 	}
 }

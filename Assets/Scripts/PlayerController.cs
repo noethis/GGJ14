@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter( Collider other ) {
 		if (other.gameObject.name == "Pit" ) {
+			GameState.Instance.LoseLevel();
 			StartCoroutine( FallDeath() );
 		}
 		else if (other.gameObject.name == "LevelGoal" ) {
@@ -90,7 +91,7 @@ public class PlayerController : MonoBehaviour {
 
 	IEnumerator FallDeath() {
 		rigidbody.drag = 20f;//Mathf.Max ( 3.5f, rigidbody.velocity.magnitude / 1f );
-		audio.PlayOneShot( fallDeathClip, 0.5f );
+		AudioSource.PlayClipAtPoint( fallDeathClip, transform.position, 1.0f );
 		float val = 0.1f;
 		float startVal = 100f;
 		while( startVal > 0f ) {

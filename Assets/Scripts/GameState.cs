@@ -20,6 +20,8 @@ public class GameState : MonoBehaviour {
 	// Static singleton property
 	public static GameState Instance { get; private set; }
 
+	public AudioClip winClip;
+
 	void Awake()
 	{
 		// First we check if there are any other instances conflicting
@@ -59,10 +61,15 @@ public class GameState : MonoBehaviour {
 
 	public void WinLevel() {
 		ShowMessage ("YOU WIN!", 5f);
+		AudioSource.PlayClipAtPoint( winClip, transform.position, 1.0f );
+	}
+
+	public void LoseLevel() {
+		ShowMessage ("YOU LOSE!", 5f);
 	}
 
 	void ExitToMenu() {
-		Application.LoadLevel( "Game" );
+		Application.LoadLevel( "Test" );
 	}
 
 	void Update() {
@@ -90,7 +97,7 @@ public class GameState : MonoBehaviour {
 		}
 
 		if ( Input.GetKeyDown( "escape" ) || Input.GetKeyDown( "f10" ) ) {
-			if ( Application.loadedLevelName == "Game" ) {
+			if ( Application.loadedLevelName == "Test" ) {
 				Application.Quit();
 			}
 			ExitToMenu();

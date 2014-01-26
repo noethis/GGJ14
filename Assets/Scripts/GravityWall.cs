@@ -4,6 +4,8 @@ using System.Collections;
 public class GravityWall : MonoBehaviour {
 
 	public float force = 10;
+	public AudioClip gravityWall;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -17,6 +19,7 @@ public class GravityWall : MonoBehaviour {
 	{
 		if (other.CompareTag("Player")) 
 		{
+			AudioSource.PlayClipAtPoint( gravityWall, transform.position, 0.5f );
 			other.rigidbody.AddForce (Vector3.forward * force, ForceMode.Impulse);
 		}
 	}

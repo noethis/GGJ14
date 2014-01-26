@@ -11,6 +11,7 @@ public class EnemyPatrol : MonoBehaviour {
 	public bool playerInSight;
 	public float fieldOfViewAngle = 110f;
 	private SphereCollider col;
+	public AudioClip footsteps;
 
 	void Awake() 
 	{
@@ -21,8 +22,16 @@ public class EnemyPatrol : MonoBehaviour {
 	void Start () {
 		agent = GetComponent<NavMeshAgent>();
 		SetNextWaypoint();
+		InvokeRepeating ("Footsteps", 1.0f, 1.0f);
 	}
-	
+
+	private void Footsteps() {
+		if (agent.hasPath)
+		{
+			AudioSource.PlayClipAtPoint( footsteps, transform.position, 1.0f );
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 
@@ -77,7 +86,7 @@ public class EnemyPatrol : MonoBehaviour {
 			float angle = Vector3.Angle(direction, transform.forward);
 			
 			// If the angle between forward and where the player is, is less than half the angle of view...
-			if(angle < fieldOfViewAngle * 0.5f)
+			if (angle < fieldOfViewAngle * 0.5f)
 			{
 				RaycastHit hit;
 				// ... and if a raycast towards the player hits something...
