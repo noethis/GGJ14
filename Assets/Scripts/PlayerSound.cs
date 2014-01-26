@@ -18,7 +18,14 @@ public class PlayerSound : PlayerController {
 		base.FixedUpdate ();
 	}
 
+	public void OnActive() {
+		GameState.Instance.LightsOff ();
+	}
+	
+	public void OnInactive() {
+	}
+
 	public void Action() {
-		GetComponent<SoundRayGenerator>().generate(transform.localPosition, transform.forward, 20, 20);
+		GetComponent<SoundRayGenerator>().generate(transform.position, transform.forward, 20, 20, 3f, 360);
 	}
 }

@@ -77,8 +77,8 @@ public class GameState : MonoBehaviour {
 		Invoke ("NextLevel", 3f);
 	}
 
-	public void LoseLevel() {
-		ShowMessage ("YOU LOSE!", 5f);
+	public void LoseLevel( string overrideText = "YOU LOSE!" ) {
+		ShowMessage (overrideText, 5f);
 		Invoke ("ResetLevel", 3f);
 	}
 
@@ -149,23 +149,23 @@ public class GameState : MonoBehaviour {
 		if (activePlayer is PlayerSight) {
 			(activePlayer as PlayerSight).OnInactive ();
 		}
-//		else if (activePlayer is PlayerSound) {
-		//	(activePlayer as PlayerSound).OnInactive ();
-//		}
-//		else if (activePlayer is PlayerTouch) {
-		//(activePlayer as PlayerTouch).OnInactive ();
-//		}
+		else if (activePlayer is PlayerSound) {
+			(activePlayer as PlayerSound).OnInactive ();
+		}
+		else if (activePlayer is PlayerTouch) {
+		(activePlayer as PlayerTouch).OnInactive ();
+		}
 
 		activePlayer = players [playerIndex];
 		if (activePlayer is PlayerSight) {
 			(activePlayer as PlayerSight).OnActive ();
 		}
-		//		else if (activePlayer is PlayerSound) {
-		//	(activePlayer as PlayerSound).OnActive ();
-		//		}
-		//		else if (activePlayer is PlayerTouch) {
-		//(activePlayer as PlayerTouch).OnActive ();
-		//		}
+		else if (activePlayer is PlayerSound) {
+			(activePlayer as PlayerSound).OnActive ();
+		}
+		else if (activePlayer is PlayerTouch) {
+			(activePlayer as PlayerTouch).OnActive ();
+		}
 	}
 
 	public void LightsOn() {

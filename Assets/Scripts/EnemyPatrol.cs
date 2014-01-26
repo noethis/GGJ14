@@ -8,11 +8,13 @@ public class EnemyPatrol : MonoBehaviour {
 	public float waypointWaitTime;
 	private NavMeshAgent agent;
 	private EnemyWaypoint currTarget;
-	private bool playerInSight = false;
-	public float fieldOfViewAngle = 45f;
+	public bool playerInSight = false;
+	public float fieldOfViewAngle = 20f;
 	public float viewLength = 2;
 	private SphereCollider col;
-	public AudioClip footsteps;
+	public AudioClip leftFootstep, rightFootstep;
+	private bool isLeft = true;
+	public SpriteRenderer leftFoot, rightFoot;
 
 	void Awake() {
 		col = GetComponent<SphereCollider>();
@@ -22,13 +24,27 @@ public class EnemyPatrol : MonoBehaviour {
 	void Start () {
 		agent = GetComponent<NavMeshAgent>();
 		SetNextWaypoint();
-		InvokeRepeating ("Footsteps", 1.0f, 1.0f);
+		InvokeRepeating ("Footsteps", 0f, 0.5f);
 	}
 
 	private void Footsteps() {
 		if (agent.hasPath)
 		{
+			GetComponent<SoundRayGenerator>().generate(transform.position, transform.forward, 20, 10, 1f, 360);
+
 //			AudioSource.PlayClipAtPoint( footsteps, transform.position, 1.0f );
+			if ( isLeft ) {
+				isLeft = false;
+				audio.PlayOneShot( leftFootstep );
+//				leftFoot.enabled = true;
+//				rightFoot.enabled = false;
+			}
+			else {
+				isLeft = true;
+				audio.PlayOneShot( rightFootstep );
+//				leftFoot.enabled = false;
+//				rightFoot.enabled = true;
+			}
 		}
 	}
 
@@ -43,6 +59,7 @@ public class EnemyPatrol : MonoBehaviour {
 					if(Physics.Raycast(transform.position, toPlayer.normalized, out hit, 8)) {
 						if(hit.collider.gameObject.CompareTag("Player")) {
 							playerInSight = true;
+							GameState.Instance.LoseLevel( "YOU WERE SEEN!" );
 						}
 					}
 				}
@@ -84,5 +101,9 @@ public class EnemyPatrol : MonoBehaviour {
 				Invoke( "SetNextWaypoint", waypointWaitTime );
 			}
 		}
+	}
+
+	public void Die() {
+		Destroy (gameObject);
 	}
 }

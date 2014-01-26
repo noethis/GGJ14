@@ -81,7 +81,6 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter( Collider other ) {
 		if (other.gameObject.name == "Pit" ) {
-			GameState.Instance.LoseLevel();
 			StartCoroutine( FallDeath() );
 		}
 		else if (other.gameObject.name == "LevelGoal" ) {
@@ -101,18 +100,22 @@ public class PlayerController : MonoBehaviour {
 			transform.localScale = new Vector3( startVal, startVal, startVal ) / 100f;
 			yield return 0;
 		}
-		StartCoroutine( Die() );
+		StartCoroutine( Die( 2f ) );
 	}
 
 	protected virtual void PreDie() {
 		GameState.Instance.LightsOn ();
 		PlayerSight playerSight = GameState.Instance.players [0] as PlayerSight;
 		playerSight.viewCone.enabled = false;
+
+	}
+	IEnumerator Die( float time = 0f ) {
+		dead = true;
+		yield return new WaitForSeconds (time);
+		GameState.Instance.LoseLevel();
 	}
 
-	IEnumerator Die() {
-		dead = true;
-		yield return new WaitForSeconds (2f);
-		GameState.Instance.ResetLevel ();
+	public void PendulumDeath() {
+		StartCoroutine( Die (0f) );
 	}
 }	

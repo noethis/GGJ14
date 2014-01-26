@@ -353,7 +353,7 @@ MonoBehaviour:
   moveSpeed: 1000
   followSpeed: 2000
   followDist: 2
-  fallDeathClip: {fileID: 8300000, guid: dbcdc7aed522deb48b9a5ca74445e6b0, type: 3}
+  fallDeathClip: {fileID: 8300000, guid: 974b1f5751b28464991fc9ba7a2a2358, type: 3}
   dead: 0
 --- !u!114 &11400002
 MonoBehaviour:
@@ -367,6 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundRay: {fileID: 11400000, guid: 92974b75db522044ba5fb14ed3f220f3, type: 2}
+  bouncingSound: {fileID: 0}
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1

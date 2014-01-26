@@ -21,6 +21,7 @@ public class PlayerSight : PlayerController {
 
 	public void OnActive() {
 		viewCone.enabled = true;
+		GameState.Instance.LightsOn ();
 	}
 
 	public void OnInactive() {

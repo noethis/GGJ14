@@ -16,12 +16,13 @@ public class SoundRay : MonoBehaviour {
 
 	void Start () {
 		rigidbody.velocity = direction * speed;
-		initTime = Time.timeSinceLevelLoad;
+		initTime = Time.time;
 		Destroy (gameObject, lifetime);
 	}
 
 	void LateUpdate() {
 		rigidbody.velocity = speed * (rigidbody.velocity.normalized);
+//		GetComponent<TrailRenderer>().material.color = Util.SetAlpha (renderer.material.color, 1f - Mathf.Clamp01 ((Time.time - initTime) / lifetime));
 	}
 
 	void OnCollisionEnter (Collision collision) {

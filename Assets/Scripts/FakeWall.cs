@@ -24,6 +24,7 @@ public class FakeWall : MonoBehaviour {
 		foreach (BoxCollider box in GetComponentsInChildren<BoxCollider>()) {
 			box.enabled = false;
 		}
+
 		ParticleSystem ps = GetComponentInChildren<ParticleSystem> ();
 		ps.Play();
 		yield return new WaitForSeconds(4f);
