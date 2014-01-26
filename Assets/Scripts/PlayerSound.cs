@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerSound : PlayerController {
-
-	public SoundRay soundRay;
-
 	// Use this for initialization
 	protected virtual void Start () {
 		base.Start ();
@@ -23,8 +20,8 @@ public class PlayerSound : PlayerController {
 	}
 
 	void checkInput() {
-		if (GameState.Instance.activePlayer && Input.GetMouseButton (0)) {
-
+		if (this == GameState.Instance.activePlayer && Input.GetMouseButtonUp (0)) {
+			GetComponent<SoundRayGenerator>().generate(transform.localPosition, transform.forward, 20, 20);
 		}
 	}
 }
