@@ -43,10 +43,22 @@ public class GameState : MonoBehaviour {
 	public void Init() {
 		playerIndex = 0;
 		activePlayer = players [ playerIndex ];
+		if (activePlayer is PlayerSight) {
+			(activePlayer as PlayerSight).OnActive ();
+		}
 	}
 
 	void Start() {
 
+	}
+
+	public void ResetLevel() 
+	{
+		Application.LoadLevel (Application.loadedLevelName);
+	}
+
+	public void WinLevel() {
+		ShowMessage ("YOU WIN!", 5f);
 	}
 
 	void ExitToMenu() {
@@ -94,9 +106,27 @@ public class GameState : MonoBehaviour {
 
 	void CycleNextPlayer() {
 		playerIndex = (playerIndex + 1) % players.Count;
-		activePlayer = players [playerIndex];
-	}
+		if (activePlayer is PlayerSight) {
+			(activePlayer as PlayerSight).OnInactive ();
+		}
+//		else if (activePlayer is PlayerSound) {
+		//	(activePlayer as PlayerSound).OnInactive ();
+//		}
+//		else if (activePlayer is PlayerTouch) {
+		//(activePlayer as PlayerTouch).OnInactive ();
+//		}
 
+		activePlayer = players [playerIndex];
+		if (activePlayer is PlayerSight) {
+			(activePlayer as PlayerSight).OnActive ();
+		}
+		//		else if (activePlayer is PlayerSound) {
+		//	(activePlayer as PlayerSound).OnActive ();
+		//		}
+		//		else if (activePlayer is PlayerTouch) {
+		//(activePlayer as PlayerTouch).OnActive ();
+		//		}
+	}
 
 
 

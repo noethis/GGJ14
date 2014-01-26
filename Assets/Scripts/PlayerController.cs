@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 
 	//UNITY
 	public float moveSpeed, followSpeed, followDist;
+	public AudioClip fallDeathClip;
 
 	//VARS
 	protected float cameraDiff;
@@ -18,6 +19,14 @@ public class PlayerController : MonoBehaviour {
 	protected virtual void Start() {
 		cameraDiff = Camera.main.transform.position.y - transform.position.y;
 	}
+
+//	public abstract void OnActive() {
+//
+//	}
+//
+//	public abstract void OnInactive() {
+//
+//	}
 
 	// Update is called once per frame
 	protected virtual void Update () {
@@ -68,5 +77,35 @@ public class PlayerController : MonoBehaviour {
 		Vector3 worldPos = Camera.main.ScreenToWorldPoint( new Vector3( Input.mousePosition.x, Input.mousePosition.y, cameraDiff ) );
 		Vector3 lookat =  new Vector3 ( worldPos.x, transform.position.y, worldPos.z);
 		transform.LookAt(lookat);
+	}
+
+	void OnTriggerEnter( Collider other ) {
+		if (other.gameObject.name == "Pit" ) {
+			StartCoroutine( FallDeath() );
+		}
+
+		if (other.gameObject.name == "LevelGoal" ) {
+			GameState.Instance.WinLevel();
+		}
+	}
+
+	IEnumerator FallDeath() {
+		rigidbody.drag = 20f;//Mathf.Max ( 3.5f, rigidbody.velocity.magnitude / 1f );
+		audio.PlayOneShot( fallDeathClip, 0.5f );
+		float val = 0.1f;
+		float startVal = 100f;
+		while( startVal > 0f ) {
+			val += 0.025f;
+			startVal -= val;
+			transform.localScale = new Vector3( startVal, startVal, startVal ) / 100f;
+			yield return 0;
+		}
+		StartCoroutine( Die() );
+	}
+
+	IEnumerator Die() {
+		dead = true;
+		yield return new WaitForSeconds (2f);
+		GameState.Instance.ResetLevel ();
 	}
 }	
