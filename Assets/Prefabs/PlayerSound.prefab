@@ -29,6 +29,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 54: {fileID: 5400000}
   - 135: {fileID: 13500000}
+  - 114: {fileID: 11400002}
   m_Layer: 9
   m_Name: PlayerSound
   m_TagString: Player
@@ -265,6 +266,17 @@ MonoBehaviour:
   followSpeed: 2000
   followDist: 2
   dead: 0
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9871151f0bfb354ba1282891b13227e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   soundRay: {fileID: 11400000, guid: cbbeb5c9d484e41029f884526f2261ba, type: 2}
 --- !u!135 &13500000
 SphereCollider:
