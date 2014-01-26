@@ -31,7 +31,7 @@ public class Music : MonoBehaviour {
 	}
 	
 	void Init () {
-		if ( Application.loadedLevelName == "Test" ) {
+		if ( Application.loadedLevelName == "Game" ) {
 		    if  (!audio.isPlaying ) {
 				audio.volume = 0.1f;
 				audio.Play();

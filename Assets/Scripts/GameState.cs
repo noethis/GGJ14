@@ -5,6 +5,7 @@ using System.Linq;
 
 public class GameState : MonoBehaviour {
 	//CONSTS
+	public const int NUM_LEVELS = 4;
 
 	//UNITY
 	public List<PlayerController> players;
@@ -16,6 +17,7 @@ public class GameState : MonoBehaviour {
 
 	//STATIC
 	public static bool DEBUG_MODE = true;
+	[HideInInspector] public static int currLevel = 1;
 
 	// Static singleton property
 	public static GameState Instance { get; private set; }
@@ -54,6 +56,15 @@ public class GameState : MonoBehaviour {
 
 	}
 
+	void NextLevel() {
+		currLevel++;
+		if (currLevel > NUM_LEVELS) {
+			Application.LoadLevel( "Game" );
+		}
+		Application.LoadLevel( "level0" + currLevel );
+		Init();
+	}
+
 	public void ResetLevel() 
 	{
 		Application.LoadLevel (Application.loadedLevelName);
@@ -62,14 +73,16 @@ public class GameState : MonoBehaviour {
 	public void WinLevel() {
 		ShowMessage ("YOU WIN!", 5f);
 		AudioSource.PlayClipAtPoint( winClip, transform.position, 1.0f );
+		Invoke ("NextLevel", 3f);
 	}
 
 	public void LoseLevel() {
 		ShowMessage ("YOU LOSE!", 5f);
+		Invoke ("ResetLevel", 1f);
 	}
 
 	void ExitToMenu() {
-		Application.LoadLevel( "Test" );
+		Application.LoadLevel( "Game" );
 	}
 
 	void Update() {
@@ -97,7 +110,7 @@ public class GameState : MonoBehaviour {
 		}
 
 		if ( Input.GetKeyDown( "escape" ) || Input.GetKeyDown( "f10" ) ) {
-			if ( Application.loadedLevelName == "Test" ) {
+			if ( Application.loadedLevelName == "Game" ) {
 				Application.Quit();
 			}
 			ExitToMenu();
@@ -120,6 +133,10 @@ public class GameState : MonoBehaviour {
 			else {
 				Time.timeScale = 1.0f;
 			}
+		}
+
+		if ( Input.GetKeyDown( "n" ) ) {
+			NextLevel();
 		}
 	}
 

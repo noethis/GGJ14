@@ -35,7 +35,7 @@ GUIText:
   m_GameObject: {fileID: 100000}
   m_Enabled: 0
   serializedVersion: 3
-  m_Text: Blue Scores
+  m_Text: Message
   m_Anchor: 4
   m_Alignment: 1
   m_PixelOffset: {x: 0, y: 0}
@@ -43,7 +43,7 @@ GUIText:
   m_TabSize: 4
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Material: {fileID: 0}
-  m_FontSize: 172
+  m_FontSize: 60
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2

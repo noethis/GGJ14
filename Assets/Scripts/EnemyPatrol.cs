@@ -28,7 +28,7 @@ public class EnemyPatrol : MonoBehaviour {
 	private void Footsteps() {
 		if (agent.hasPath)
 		{
-			AudioSource.PlayClipAtPoint( footsteps, transform.position, 1.0f );
+//			AudioSource.PlayClipAtPoint( footsteps, transform.position, 1.0f );
 		}
 	}
 
