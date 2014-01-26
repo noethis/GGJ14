@@ -15,6 +15,9 @@ public class GravityWall : MonoBehaviour {
 	}
 	void OnTriggerStay (Collider other)
 	{
-		other.rigidbody.AddForce (Vector3.forward * force, ForceMode.Impulse);
+		if (other.CompareTag ("Player")) 
+		{
+			other.rigidbody.AddForce (Vector3.forward * force, ForceMode.Impulse);
+		}
 	}
 }
