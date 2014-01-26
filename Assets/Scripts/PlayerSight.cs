@@ -36,4 +36,9 @@ public class PlayerSight : PlayerController {
 	protected virtual void FixedUpdate () {
 		base.FixedUpdate ();
 	}
+
+	protected virtual void PreDie() {
+		base.PreDie ();
+		viewCone.enabled = false;
+	}
 }

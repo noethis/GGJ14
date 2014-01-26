@@ -9,7 +9,7 @@ public class GameState : MonoBehaviour {
 
 	//UNITY
 	public List<PlayerController> players;
-	public GUIText messageText;
+	public GUIText messageText, promptText;
 
 	//VARS
 	[HideInInspector] public PlayerController activePlayer;
@@ -66,7 +66,8 @@ public class GameState : MonoBehaviour {
 	}
 
 	public void ResetLevel() 
-	{
+	{	
+		GameState.Instance.LightsOff ();
 		Application.LoadLevel (Application.loadedLevelName);
 	}
 
@@ -78,7 +79,7 @@ public class GameState : MonoBehaviour {
 
 	public void LoseLevel() {
 		ShowMessage ("YOU LOSE!", 5f);
-		Invoke ("ResetLevel", 1f);
+		Invoke ("ResetLevel", 3f);
 	}
 
 	void ExitToMenu() {
@@ -138,6 +139,9 @@ public class GameState : MonoBehaviour {
 		if ( Input.GetKeyDown( "n" ) ) {
 			NextLevel();
 		}
+		if ( Input.GetKeyDown( "tab" ) ) {
+			ResetLevel();
+		}
 	}
 
 	void CycleNextPlayer() {
@@ -164,12 +168,36 @@ public class GameState : MonoBehaviour {
 		//		}
 	}
 
+	public void LightsOn() {
+		RenderSettings.ambientLight = new Color (1f, 1f, 1f, 1f);
+	}
+
+	public void LightsOff() {
+		RenderSettings.ambientLight = new Color (0f, 0f, 0f, 1f);
+	}
 
 
 
 
 
 
+
+	public void ShowPrompt( string _text, float time = 0.0f ) {
+		promptText.enabled = true;
+		promptText.text = _text;
+		if ( time > 0 ) {
+			StartCoroutine( HidePrompt( time ) );
+		}
+	}
+	
+	public void HidePrompt() {
+		promptText.enabled = false;
+	}
+	
+	IEnumerator HidePrompt( float time = 0.0f ) {
+		yield return new WaitForSeconds( time );
+		promptText.enabled = false;
+	}
 
 
 	public void ShowMessage( string _text, float time = 0.0f ) {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TitleGUI : MonoBehaviour {
+public class InstructionsGUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -11,7 +11,7 @@ public class TitleGUI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if ( Input.GetKeyDown( "space" ) ) {
-			Application.LoadLevel( "Instructions" );
+			Application.LoadLevel( "level01" );
 		}
 	}
 }

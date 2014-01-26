@@ -90,6 +90,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	IEnumerator FallDeath() {
+		PreDie ();
 		rigidbody.drag = 20f;//Mathf.Max ( 3.5f, rigidbody.velocity.magnitude / 1f );
 		AudioSource.PlayClipAtPoint( fallDeathClip, transform.position, 1.0f );
 		float val = 0.1f;
@@ -101,6 +102,12 @@ public class PlayerController : MonoBehaviour {
 			yield return 0;
 		}
 		StartCoroutine( Die() );
+	}
+
+	protected virtual void PreDie() {
+		GameState.Instance.LightsOn ();
+		PlayerSight playerSight = GameState.Instance.players [0] as PlayerSight;
+		playerSight.viewCone.enabled = false;
 	}
 
 	IEnumerator Die() {

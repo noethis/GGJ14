@@ -1,17 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TitleGUI : MonoBehaviour {
+public class Rotator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if ( Input.GetKeyDown( "space" ) ) {
-			Application.LoadLevel( "Instructions" );
-		}
+		transform.Rotate (Vector3.forward, 360f * Time.deltaTime / 20f);
 	}
 }
