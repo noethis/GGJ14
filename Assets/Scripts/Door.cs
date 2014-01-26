@@ -2,10 +2,11 @@
 using System.Collections;
 
 public class Door : MonoBehaviour {
-	private const float LIP = 0.25f;
+	private const float MOVE_TIME = 3f, MOVE_DIST = 1f;
 	public Transform leftDoor, rightDoor;
 	
 	public bool isOpen = false;
+	private bool isMoving = false;
 	
 	private Vector3 leftStart, rightStart;
 	
@@ -21,16 +22,48 @@ public class Door : MonoBehaviour {
 	}
 	
 	public void Open() {
-		
+		if (isMoving) {
+			return;
+		}
+		StartCoroutine (Open_Internal ());
 	}
 	
 	IEnumerator Open_Internal() {
-//		float dist = 0f;
-//		float totalDist = 2.5f - LIP;
-//		while (dist < totalDist) {
-//			leftDoor.position = leftStart - dist;
-//			rightDoor.position = rightStart + dist;
-//		}
+		isMoving = true;
+		float dist = 0f;
+		float totalDist = MOVE_DIST;
+		while (dist < totalDist) {
+			dist += ( MOVE_TIME * Time.deltaTime ) / totalDist;
+			leftDoor.position = leftStart - transform.right * dist;
+			rightDoor.position = rightStart + transform.right * dist;
+			yield return 0;
+		}
+		isMoving = false;
+		yield break;
+	}
+
+	public void Close() {
+		if (isMoving) {
+			return;
+		}
+		StartCoroutine (Close_Internal ());
+	}
+	
+	IEnumerator Close_Internal() {
+		isMoving = true;
+		float dist = 0f;
+		float totalDist = MOVE_DIST;
+		Vector3 leftEnd = leftDoor.position;
+		Vector3 rightEnd = rightDoor.position;
+		while (dist < totalDist) {
+			dist += ( MOVE_TIME * Time.deltaTime ) / totalDist;
+			leftDoor.position = leftEnd + transform.right * dist;
+			rightDoor.position = rightEnd - transform.right * dist;
+			yield return 0;
+		}
+		leftDoor.position = leftStart;
+		rightDoor.position = rightStart;
+		isMoving = false;
 		yield break;
 	}
 }

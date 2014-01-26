@@ -77,6 +77,18 @@ public class GameState : MonoBehaviour {
 			CycleNextPlayer();
 		}
 
+		if (Input.GetKeyDown ("e")) {
+			if (activePlayer is PlayerSight) {
+				(activePlayer as PlayerSight).Action ();
+			}
+			else if (activePlayer is PlayerSound) {
+				(activePlayer as PlayerSound).Action ();
+			}
+			else if (activePlayer is PlayerTouch) {
+				(activePlayer as PlayerTouch).Action ();
+			}
+		}
+
 		if ( Input.GetKeyDown( "escape" ) || Input.GetKeyDown( "f10" ) ) {
 			if ( Application.loadedLevelName == "Game" ) {
 				Application.Quit();

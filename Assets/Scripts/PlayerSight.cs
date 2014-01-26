@@ -15,6 +15,10 @@ public class PlayerSight : PlayerController {
 		base.Start ();
 	}
 
+	public void Action() {
+
+	}
+
 	public void OnActive() {
 		viewCone.enabled = true;
 	}

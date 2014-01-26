@@ -83,8 +83,7 @@ public class PlayerController : MonoBehaviour {
 		if (other.gameObject.name == "Pit" ) {
 			StartCoroutine( FallDeath() );
 		}
-
-		if (other.gameObject.name == "LevelGoal" ) {
+		else if (other.gameObject.name == "LevelGoal" ) {
 			GameState.Instance.WinLevel();
 		}
 	}

@@ -16,12 +16,9 @@ public class PlayerSound : PlayerController {
 	// Update is called once per physics frame
 	protected virtual void FixedUpdate () {
 		base.FixedUpdate ();
-		checkInput ();
 	}
 
-	void checkInput() {
-		if (this == GameState.Instance.activePlayer && Input.GetMouseButtonUp (0)) {
-			GetComponent<SoundRayGenerator>().generate(transform.localPosition, transform.forward, 20, 20);
-		}
+	public void Action() {
+		GetComponent<SoundRayGenerator>().generate(transform.localPosition, transform.forward, 20, 20);
 	}
 }
