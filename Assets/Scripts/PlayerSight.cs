@@ -4,12 +4,15 @@ using System.Collections.Generic;
 
 public class PlayerSight : PlayerController {
 
-	private SpriteRenderer viewCone;
+	public SpriteRenderer viewCone;
+
+	protected virtual void Awake() {
+		base.Awake ();
+	}
 
 	// Use this for initialization
 	protected virtual void Start () {
 		base.Start ();
-		viewCone = GetComponentInChildren<SpriteRenderer> ();
 	}
 
 	public void OnActive() {
