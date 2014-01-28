@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 0}
   switchOn: 0
-  snd: {fileID: 8300000, guid: 9cf0e93dda37b454c8cb88724d1e28fe, type: 3}
+  snd: {fileID: 8300000, guid: 6cbb323c7b7a6cb4ca39b273060639f2, type: 3}
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1

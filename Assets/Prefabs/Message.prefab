@@ -35,7 +35,7 @@ GUIText:
   m_GameObject: {fileID: 100000}
   m_Enabled: 0
   serializedVersion: 3
-  m_Text: Message
+  m_Text: Level 1
   m_Anchor: 4
   m_Alignment: 1
   m_PixelOffset: {x: 0, y: 0}

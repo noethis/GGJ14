@@ -327,8 +327,8 @@ MonoBehaviour:
   playerInSight: 0
   fieldOfViewAngle: 110
   viewLength: 2
-  leftFootstep: {fileID: 8300000, guid: b793354c0fe890a43bfbbd22888b22a0, type: 3}
-  rightFootstep: {fileID: 8300000, guid: 505f837990e6cab45b1857255612104a, type: 3}
+  leftFootstep: {fileID: 8300000, guid: e0895aeeb11b48642aeb0e1d30e55882, type: 3}
+  rightFootstep: {fileID: 8300000, guid: 405eb4adbe2e2bc4faf4929888892bb3, type: 3}
   leftFoot: {fileID: 21200002}
   rightFoot: {fileID: 21200000}
 --- !u!114 &11400002

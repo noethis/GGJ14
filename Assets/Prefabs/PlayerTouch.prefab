@@ -352,9 +352,9 @@ MonoBehaviour:
   moveSpeed: 1000
   followSpeed: 2000
   followDist: 2
-  fallDeathClip: {fileID: 8300000, guid: 974b1f5751b28464991fc9ba7a2a2358, type: 3}
+  fallDeathClip: {fileID: 8300000, guid: 38ba1107c2308bf4ea30f60df6f903e2, type: 3}
   dead: 0
-  punchSnd: {fileID: 8300000, guid: 7ea551dd1959feb47a1d113f447a55b0, type: 3}
+  punchSnd: {fileID: 8300000, guid: 37ef22816cab5e64083a2a515f54a9f8, type: 3}
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1

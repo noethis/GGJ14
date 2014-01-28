@@ -353,7 +353,7 @@ MonoBehaviour:
   moveSpeed: 1000
   followSpeed: 2000
   followDist: 2
-  fallDeathClip: {fileID: 8300000, guid: 974b1f5751b28464991fc9ba7a2a2358, type: 3}
+  fallDeathClip: {fileID: 8300000, guid: 38ba1107c2308bf4ea30f60df6f903e2, type: 3}
   dead: 0
 --- !u!114 &11400002
 MonoBehaviour:
