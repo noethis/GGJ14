@@ -6,7 +6,7 @@ TagManager:
   - Waypoint
   - Enemy
   - Player
-  - 
+  - AlwaysOnTop
   - 
   - 
   Builtin Layer 0: Default
@@ -45,4 +45,8 @@ TagManager:
   - name: Default
     userID: 0
     uniqueID: 0
+    locked: 0
+  - name: Sprites
+    userID: 1
+    uniqueID: 1787941529
     locked: 0

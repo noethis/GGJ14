@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerSound : PlayerController {
+	public Light playerLight;
+
 	// Use this for initialization
 	protected virtual void Start () {
 		base.Start ();
@@ -20,9 +22,11 @@ public class PlayerSound : PlayerController {
 
 	public void OnActive() {
 		GameState.Instance.LightsOff ();
+		playerLight.enabled = true;
 	}
 	
 	public void OnInactive() {
+		playerLight.enabled = false;
 	}
 
 	public void Action() {

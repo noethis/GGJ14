@@ -169,11 +169,26 @@ public class GameState : MonoBehaviour {
 	}
 
 	public void LightsOn() {
-		RenderSettings.ambientLight = new Color (1f, 1f, 1f, 1f);
+		float val = 10f/255f;
+		RenderSettings.ambientLight = new Color (val, val, val, 1f);
+		foreach( Light l in GameObject.FindObjectsOfType<Light>() ) {
+			if ( l.name != "PlayerLight" ) {
+				l.enabled = true;
+			}
+		}
+		foreach( GameObject g in GameObject.FindGameObjectsWithTag( "AlwaysOnTop" ) ) {
+			g.GetComponent<SpriteRenderer>().color = Color.white;
+		}
 	}
 
 	public void LightsOff() {
 		RenderSettings.ambientLight = new Color (0f, 0f, 0f, 1f);
+		foreach( Light l in GameObject.FindObjectsOfType<Light>() ) {
+			l.enabled = false;
+		}
+		foreach( GameObject g in GameObject.FindGameObjectsWithTag( "AlwaysOnTop" ) ) {
+			g.GetComponent<SpriteRenderer>().color = Color.black;
+		}
 	}
 
 

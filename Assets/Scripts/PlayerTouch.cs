@@ -8,6 +8,7 @@ public class PlayerTouch : PlayerController {
 	private FakeWall activeFakeWall;
 	private EnemyPatrol activeEnemy;
 	public AudioClip punchSnd;
+	public Light playerLight;
 
 	// Use this for initialization
 	protected virtual void Start () {
@@ -26,10 +27,12 @@ public class PlayerTouch : PlayerController {
 
 	public void OnActive() {
 		GameState.Instance.LightsOff ();
+		playerLight.enabled = true;
 	}
 
 	
 	public void OnInactive() {
+		playerLight.enabled = false;
 	}
 
 	public void Action() {
