@@ -6,7 +6,7 @@ public class PlayerSight : PlayerController {
 
 	public Light playerLight;
 	public SpriteRenderer viewCone;
-	public Transform iris, white;
+	public Transform eye, iris, white;
 	private Vector3 irisLocalPos, whiteLocalPos;
 
 	protected virtual void Awake() {
@@ -18,6 +18,37 @@ public class PlayerSight : PlayerController {
 		base.Start ();
 		irisLocalPos = iris.localPosition;
 		whiteLocalPos = white.localPosition;
+		InvokeRepeating ("FootSteps", 0f, .6f);
+	}
+
+	void FootSteps () {
+		if ( dead ) {
+			return;
+		}
+		if ( isMoving ) {
+			audio.Play ();
+			StartCoroutine( Bounce() );
+		}
+	}
+
+	IEnumerator Bounce () {
+		float growTime = 0.2f;
+		while ( growTime > 0f ) {
+			growTime -= Time.deltaTime;
+			eye.localScale = Vector3.Lerp( Vector3.one * 0.95f, Vector3.one * 1.07f, Mathf.Clamp01( growTime / 0.2f ) );
+			eye.localScale = new Vector3( eye.localScale.x, 1f, 1f );
+			iris.localScale = white.localScale = eye.localScale;
+			yield return 0;
+		}
+		float shrinkTime = 0.4f;
+		while ( shrinkTime > 0f ) {
+			shrinkTime -= Time.deltaTime;
+			eye.localScale = Vector3.Lerp( Vector3.one * 1.07f, Vector3.one, Mathf.Clamp01( shrinkTime / 0.4f ) );
+			eye.localScale = new Vector3( eye.localScale.x, 1f, 1f );
+			iris.localScale = white.localScale = eye.localScale;
+			yield return 0;
+		}
+		yield break;
 	}
 
 	public void Action() {

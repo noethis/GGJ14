@@ -392,15 +392,15 @@ AudioSource:
   m_GameObject: {fileID: 100004}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: a46bd2048e455d343ba6143198035bd0, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 10
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -492,9 +492,13 @@ MonoBehaviour:
   followSpeed: 2000
   followDist: 2
   fallDeathClip: {fileID: 8300000, guid: 38ba1107c2308bf4ea30f60df6f903e2, type: 3}
+  deathClip: {fileID: 8300000, guid: a0b44862de2c1e446bd9fe64e78e4538, type: 3}
+  bloodSplat: {fileID: 21200000, guid: 71bd9bf055a3ab64692f15c0b8ff327a, type: 2}
+  bloodPuff: {fileID: 19800000, guid: 0183c21e8ba3deb4d8fe649bd30c39ce, type: 2}
   dead: 0
   playerLight: {fileID: 10800000}
   viewCone: {fileID: 21200000}
+  eye: {fileID: 400018}
   iris: {fileID: 400016}
   white: {fileID: 400000}
 --- !u!135 &13500000

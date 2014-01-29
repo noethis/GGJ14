@@ -78,6 +78,18 @@ public static class Util {
 		return c;
 	}
 
+	public static IEnumerator FadeOut( SpriteRenderer sprite, float onTime, float fadeTime ) {
+		yield return new WaitForSeconds( onTime );
+		for( float t = 0f; t <= fadeTime; t += Time.deltaTime ) {
+			sprite.material.color = Util.SetAlpha( sprite.material.color, Mathf.Lerp ( 1f, 0f, t/fadeTime ) );
+			yield return 0;
+		}
+		GameObject.Destroy ( sprite.gameObject );
+	}
+
+
+
+
 	/*** EXTENSIONS ***/
 	public static void Shuffle<T>(this List<T> list)  
 	{  

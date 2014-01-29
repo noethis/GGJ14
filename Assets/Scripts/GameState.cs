@@ -5,7 +5,7 @@ using System.Linq;
 
 public class GameState : MonoBehaviour {
 	//CONSTS
-	public const int NUM_LEVELS = 4;
+	public const int NUM_LEVELS = 5;
 
 	//UNITY
 	public List<PlayerController> players;
@@ -18,6 +18,7 @@ public class GameState : MonoBehaviour {
 	//STATIC
 	public static bool DEBUG_MODE = true;
 	[HideInInspector] public static int currLevel = 1;
+	public static bool selectedEar = false;
 
 	// Static singleton property
 	public static GameState Instance { get; private set; }
@@ -50,6 +51,8 @@ public class GameState : MonoBehaviour {
 		if (activePlayer is PlayerSight) {
 			(activePlayer as PlayerSight).OnActive ();
 		}
+		SoundOff();
+		Music.Instance.audio.volume = 1f;
 	}
 
 	void Start() {
@@ -59,7 +62,8 @@ public class GameState : MonoBehaviour {
 	void NextLevel() {
 		currLevel++;
 		if (currLevel > NUM_LEVELS) {
-			Application.LoadLevel( "Game" );
+			ExitToMenu();
+			return;
 		}
 		Application.LoadLevel( "level0" + currLevel );
 		Init();
@@ -67,7 +71,8 @@ public class GameState : MonoBehaviour {
 
 	public void ResetLevel() 
 	{	
-		GameState.Instance.LightsOff ();
+		LightsOff ();
+		SoundOff ();
 		Application.LoadLevel (Application.loadedLevelName);
 	}
 
@@ -83,6 +88,7 @@ public class GameState : MonoBehaviour {
 	}
 
 	void ExitToMenu() {
+		currLevel = 1;
 		Application.LoadLevel( "Game" );
 	}
 
@@ -119,22 +125,22 @@ public class GameState : MonoBehaviour {
 	}
 
 	void RunDebugCommands() {
-		if ( Input.GetKeyDown( "t" ) ) {
-			if ( Time.timeScale == 1.0f ) {
-				Time.timeScale = 10.0f;
-			}
-			else {
-				Time.timeScale = 1.0f;
-			}
-		}
-		if ( Input.GetKeyDown( "y" ) ) {
-			if ( Time.timeScale == 1.0f ) {
-				Time.timeScale = 0.25f;
-			}
-			else {
-				Time.timeScale = 1.0f;
-			}
-		}
+//		if ( Input.GetKeyDown( "t" ) ) {
+//			if ( Time.timeScale == 1.0f ) {
+//				Time.timeScale = 10.0f;
+//			}
+//			else {
+//				Time.timeScale = 1.0f;
+//			}
+//		}
+//		if ( Input.GetKeyDown( "y" ) ) {
+//			if ( Time.timeScale == 1.0f ) {
+//				Time.timeScale = 0.25f;
+//			}
+//			else {
+//				Time.timeScale = 1.0f;
+//			}
+//		}
 
 		if ( Input.GetKeyDown( "n" ) ) {
 			NextLevel();
@@ -184,10 +190,29 @@ public class GameState : MonoBehaviour {
 	public void LightsOff() {
 		RenderSettings.ambientLight = new Color (0f, 0f, 0f, 1f);
 		foreach( Light l in GameObject.FindObjectsOfType<Light>() ) {
-			l.enabled = false;
+			if ( l.name != "Switch" ) {
+				l.enabled = false;
+			}
 		}
 		foreach( GameObject g in GameObject.FindGameObjectsWithTag( "AlwaysOnTop" ) ) {
 			g.GetComponent<SpriteRenderer>().color = Color.black;
+		}
+	}
+
+
+	public void SoundOn() {
+		foreach( AudioSource a in GameObject.FindObjectsOfType<AudioSource>() ) {
+			if ( a.name != "Music" ) {
+				a.volume = 1.25f;
+			}
+		}
+	}
+
+	public void SoundOff() {
+		foreach( AudioSource a in GameObject.FindObjectsOfType<AudioSource>() ) {
+			if ( a.name != "Music" ) {
+				a.volume = 0.33f;
+			}
 		}
 	}
 
@@ -210,7 +235,12 @@ public class GameState : MonoBehaviour {
 	}
 	
 	IEnumerator HidePrompt( float time = 0.0f ) {
-		yield return new WaitForSeconds( time );
+		while ( time > 0f ) {
+			promptText.enabled = true;
+			time -= Time.deltaTime;
+			yield return 0;
+		}
+//		yield return new WaitForSeconds( time );
 		promptText.enabled = false;
 	}
 

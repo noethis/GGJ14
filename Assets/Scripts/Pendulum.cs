@@ -2,21 +2,29 @@
 using System.Collections;
 
 public class Pendulum : MonoBehaviour {
-	private const float ARC = 10f;
+	public float ARC = 30f;
+	public float  TIME = 1f;
 
 	private int direction = 1;
 	private Vector3 startAngle, startPos;
+	public float startTime = 0f;
 
 	// Use this for initialization
 	void Start () {
 		startPos = transform.position;
 		startAngle = transform.rotation.eulerAngles;
-		InvokeRepeating ("Sound", 0f, 1f);
+//		startTime = Random.Range( 0f, 4f );
+		InvokeRepeating ("Sound", 2f + startTime, TIME * 2f );
+		InvokeRepeating ("SoundGen", startTime, .25f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		transform.RotateAround ( startPos + new Vector3( 0f, 24f, 0f ), Vector3.forward, direction * ARC * Time.deltaTime / 1f);
+		if ( startTime > 0f ) {
+			startTime -= Time.deltaTime;
+			return;
+		}
+		transform.RotateAround ( startPos + new Vector3( 0f, 24f, 0f ), transform.forward, direction * ARC * Time.deltaTime / TIME);
 		float val = Mathf.Abs( (startAngle.z - transform.rotation.eulerAngles.z) );
 		if (val >= 180f) {
 			val = 360f - val;
@@ -33,12 +41,18 @@ public class Pendulum : MonoBehaviour {
 	void OnTriggerEnter( Collider other ) {
 		if (other.CompareTag ("Player")) {
 			PlayerController player = other.gameObject.GetComponent<PlayerController>();
-			player.PendulumDeath();
+			if ( player == GameState.Instance.activePlayer ) {
+				player.PendulumDeath();
+			}
 		}
 	}
 
 
 	private void Sound() {
-		GetComponent<SoundRayGenerator>().generate(transform.position, transform.forward, 20, 10, 1f, 360);
+		audio.PlayOneShot( audio.clip );
+	}
+
+	private void SoundGen() {
+		GetComponent<SoundRayGenerator>().generatePendulum(transform.position, direction * transform.forward);
 	}
 }

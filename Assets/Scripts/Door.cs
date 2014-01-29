@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Door : MonoBehaviour {
 	private const float MOVE_TIME = 3f, MOVE_DIST = 1f;
 	public Transform leftDoor, rightDoor;
+	public AudioClip closeClip, openClip;
 	
 	public bool isOpen = false;
 	private bool isMoving = false;
@@ -29,6 +30,7 @@ public class Door : MonoBehaviour {
 	}
 	
 	IEnumerator Open_Internal() {
+		audio.PlayOneShot( openClip );
 		isMoving = true;
 		float dist = 0f;
 		float totalDist = MOVE_DIST;
@@ -50,6 +52,7 @@ public class Door : MonoBehaviour {
 	}
 	
 	IEnumerator Close_Internal() {
+		audio.PlayOneShot( closeClip );
 		isMoving = true;
 		float dist = 0f;
 		float totalDist = MOVE_DIST;

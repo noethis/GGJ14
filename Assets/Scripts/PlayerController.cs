@@ -7,17 +7,22 @@ public class PlayerController : MonoBehaviour {
 
 	//UNITY
 	public float moveSpeed, followSpeed, followDist;
-	public AudioClip fallDeathClip;
+	public AudioClip fallDeathClip, deathClip;
+	public SpriteRenderer bloodSplat;
+	public ParticleSystem bloodPuff;
 
 	//VARS
 	protected float cameraDiff;
 	[HideInInspector] public bool dead = false;
+	protected bool isMoving = false;
+	protected string deathString = "YOU LOSE!";
 
 	protected virtual void Awake() {
 	}
 
 	protected virtual void Start() {
 		cameraDiff = Camera.main.transform.position.y - transform.position.y;
+//		StartCoroutine( TestMovement() );
 	}
 
 //	public abstract void OnActive() {
@@ -30,6 +35,10 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	protected virtual void Update () {
+		if ( dead ) {
+			return;
+		}
+
 		//INACTIVE
 		if (GameState.Instance.activePlayer != this) {
 
@@ -41,6 +50,10 @@ public class PlayerController : MonoBehaviour {
 	}	
 
 	protected virtual void FixedUpdate () {
+		if ( dead ) {
+			return;
+		}
+		isMoving = false;
 		//INACTIVE
 		if ( GameState.Instance.activePlayer != this) {
 			Follow();
@@ -68,8 +81,28 @@ public class PlayerController : MonoBehaviour {
 
 		Vector3 movement = new Vector3( h, 0, v );
 
+		if ( h != 0 || v != 0 ) {
+			isMoving = true;
+		}
+
 		rigidbody.AddForce( movement * moveSpeed * Time.deltaTime );
 	}
+
+//	IEnumerator TestMovement() {
+//		while ( true ) {
+//			float v = Input.GetAxisRaw("Vertical"  );	
+//			float h = Input.GetAxisRaw("Horizontal" );
+//
+//			if ( v != 0f || h != 0f ) {
+//				Vector3 movement = new Vector3( h, 0, v );
+//				rigidbody.AddForce( movement * moveSpeed * 0.4f );
+//				yield return new WaitForSeconds( 0.5f );
+//			}
+//			else {
+//				yield return 0;
+//			}
+//		}
+//	}
 
 	void RunAiming() {
 		Quaternion oldRotation = transform.rotation;
@@ -79,19 +112,23 @@ public class PlayerController : MonoBehaviour {
 		transform.LookAt(lookat);
 	}
 
-	void OnTriggerEnter( Collider other ) {
+	protected virtual void OnTriggerEnter( Collider other ) {
 		if (other.gameObject.name == "Pit" ) {
-			StartCoroutine( FallDeath() );
+			if ( this == GameState.Instance.activePlayer ) {
+				StartCoroutine( FallDeath() );
+			}
 		}
 		else if (other.gameObject.name == "LevelGoal" ) {
-			GameState.Instance.WinLevel();
+			if ( this == GameState.Instance.activePlayer ) {
+				GameState.Instance.WinLevel();
+			}
 		}
 	}
 
 	IEnumerator FallDeath() {
 		PreDie ();
 		rigidbody.drag = 20f;//Mathf.Max ( 3.5f, rigidbody.velocity.magnitude / 1f );
-		AudioSource.PlayClipAtPoint( fallDeathClip, transform.position, 1.0f );
+		AudioSource.PlayClipAtPoint( fallDeathClip, transform.position, 0.75f );
 		float val = 0.1f;
 		float startVal = 100f;
 		while( startVal > 0f ) {
@@ -100,7 +137,8 @@ public class PlayerController : MonoBehaviour {
 			transform.localScale = new Vector3( startVal, startVal, startVal ) / 100f;
 			yield return 0;
 		}
-		StartCoroutine( Die( 2f ) );
+		deathString = "YOU FELL IN A PIT!";
+		StartCoroutine( Die( 1f ) );
 	}
 
 	protected virtual void PreDie() {
@@ -110,12 +148,43 @@ public class PlayerController : MonoBehaviour {
 
 	}
 	IEnumerator Die( float time = 0f ) {
+		if ( dead ) {
+			yield break;
+		}
 		dead = true;
 		yield return new WaitForSeconds (time);
-		GameState.Instance.LoseLevel();
+		GameState.Instance.LoseLevel( deathString );
 	}
 
 	public void PendulumDeath() {
+		if ( dead ) {
+			return;
+		}
+		audio.PlayOneShot( deathClip );
+		StartCoroutine( SpawnBlood() );
+		foreach( SpriteRenderer sprite in GetComponentsInChildren<SpriteRenderer>() ) {
+			sprite.enabled = false;
+		}
+//		deathString = "YOU FELL IN A PIT!";
 		StartCoroutine( Die (0f) );
+	}
+
+	IEnumerator SpawnBlood() {
+		float radius = 2f;
+		int num = Random.Range( 3, 6 );
+		Instantiate( bloodPuff, transform.position, transform.rotation );
+		Destroy ( bloodPuff.gameObject, 3f );
+		for( int i = 0; i < num; i++ ) {
+			SpriteRenderer blood = Instantiate( bloodSplat ) as SpriteRenderer;
+			blood.transform.position = transform.position + transform.right * Random.Range ( -radius, radius ) + transform.forward * Random.Range ( -radius, radius );
+			Vector3 pos = blood.transform.position;
+			pos.y = 0.01f;
+			blood.transform.position = pos;
+			Vector3 angle = blood.transform.eulerAngles;
+			angle.y = Random.Range( 0f, 180f );
+			blood.transform.eulerAngles = angle;
+			StartCoroutine( Util.FadeOut( blood, 3f, 3f ) );
+			yield return new WaitForSeconds( Random.Range( 0.05f, 0.15f ) );
+		}
 	}
 }	

@@ -6,7 +6,6 @@ public class Switch : MonoBehaviour {
 	public Door door;
 	[HideInInspector] public bool switchOn;
 	private bool isToggling = false;
-	public AudioClip snd;
 	
 	// Use this for initialization
 	void Start () {
@@ -31,7 +30,7 @@ public class Switch : MonoBehaviour {
 			return;
 		}
 		StartCoroutine(Toggle_Internal());
-		AudioSource.PlayClipAtPoint (snd, transform.position);
+		audio.Play();
 		switchOn = !switchOn;
 		if ( switchOn ) {
 			ToggleOn();
@@ -49,11 +48,21 @@ public class Switch : MonoBehaviour {
 
 	void ToggleOn() {
 		light.color = Color.green;
+		StartCoroutine( OpenDoor() );
+	}
+
+	IEnumerator OpenDoor() {
+		yield return new WaitForSeconds( 1f );
 		door.Open ();
 	}
 
 	void ToggleOff() {
 		light.color = Color.red;
+		StartCoroutine( CloseDoor() );
+	}
+
+	IEnumerator CloseDoor() {
+		yield return new WaitForSeconds( 1f );
 		door.Close ();
 	}
 }

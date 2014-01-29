@@ -1,37 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &100000
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400000}
-  - 212: {fileID: 21200000}
-  m_Layer: 0
-  m_Name: Right
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &100002
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400002}
-  - 212: {fileID: 21200002}
-  m_Layer: 0
-  m_Name: Left
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &100004
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,29 +70,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &400000
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: .410466194, y: -1.48601103, z: .169454575}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400004}
---- !u!4 &400002
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: -.257863045, y: -1.48601079, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400004}
+  m_IsActive: 0
 --- !u!4 &400004
 Transform:
   m_ObjectHideFlags: 1
@@ -136,8 +82,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400014}
-  - {fileID: 400002}
-  - {fileID: 400000}
   m_Father: {fileID: 0}
 --- !u!4 &400006
 Transform:
@@ -268,10 +212,10 @@ AudioSource:
   Mute: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 3
+  MaxDistance: 25
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -325,12 +269,23 @@ MonoBehaviour:
   - {fileID: 0}
   waypointWaitTime: 2
   playerInSight: 0
-  fieldOfViewAngle: 110
-  viewLength: 2
-  leftFootstep: {fileID: 8300000, guid: e0895aeeb11b48642aeb0e1d30e55882, type: 3}
-  rightFootstep: {fileID: 8300000, guid: 405eb4adbe2e2bc4faf4929888892bb3, type: 3}
-  leftFoot: {fileID: 21200002}
-  rightFoot: {fileID: 21200000}
+  fieldOfViewAngle: 75
+  viewLength: 5
+  leftFootsteps:
+  - {fileID: 8300000, guid: e0895aeeb11b48642aeb0e1d30e55882, type: 3}
+  - {fileID: 8300000, guid: 537213a4702d6cd4e9be0e343acaf156, type: 3}
+  - {fileID: 8300000, guid: 8ee3d64590a74e148bbd2670b37e3333, type: 3}
+  rightFootsteps:
+  - {fileID: 8300000, guid: 405eb4adbe2e2bc4faf4929888892bb3, type: 3}
+  - {fileID: 8300000, guid: 564a3b5fbe7002d4d8d96a530591c120, type: 3}
+  - {fileID: 8300000, guid: 08994486b23c04b41b0e31ef16e2bd03, type: 3}
+  gaspClip: {fileID: 8300000, guid: f71bfb943349dde478ce37f69864cfc5, type: 3}
+  painClip: {fileID: 8300000, guid: a0b44862de2c1e446bd9fe64e78e4538, type: 3}
+  leftFoot: {fileID: 21200000, guid: 2914eac8729de5348ae700cb2422c153, type: 2}
+  rightFoot: {fileID: 21200000, guid: e0dbc7f3f9e26ce45a71de50cd2aac39, type: 2}
+  bloodSplat: {fileID: 21200000, guid: 71bd9bf055a3ab64692f15c0b8ff327a, type: 2}
+  bloodPuff: {fileID: 19800000, guid: 0183c21e8ba3deb4d8fe649bd30c39ce, type: 2}
+  invisible: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -343,7 +298,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundRay: {fileID: 11400000, guid: 92974b75db522044ba5fb14ed3f220f3, type: 2}
-  bouncingSound: {fileID: 8300000, guid: ea4af7e0575452941af61f3e283b8c19, type: 3}
+  soundRayEnemy: {fileID: 400000, guid: 867c397ef9332a641a7463b23174f492, type: 2}
+  soundRayPendulum: {fileID: 0}
+  bouncingSoundOverride: {fileID: 0}
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -376,52 +333,6 @@ NavMeshAgent:
   m_BaseOffset: 1.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!212 &21200000
-SpriteRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_SortingLayerID: 0
-  m_Sprite: {fileID: 21300000, guid: 038b5d51b220ba446b23e5429a29bebc, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!212 &21200002
-SpriteRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_SortingLayerID: 0
-  m_Sprite: {fileID: 21300000, guid: f4656beebdde0fd4fa300faf78bebeb2, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
